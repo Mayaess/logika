@@ -27,6 +27,22 @@ line.addLayout(hline1)
 line.addLayout(hline2)
 line.addLayout(hline3)
 
+def win():
+    victory = QMessageBox()
+    victory.setText("Молодець")
+    victory.exec_()
+
+def lose():
+    victory = QMessageBox()
+    victory.setText("Неправильно")
+    victory.exec_()
+
+radio_btn3.clicked.connect(win)
+
+radio_btn1.clicked.connect(lose)
+radio_btn2.clicked.connect(lose)
+radio_btn4.clicked.connect(lose)
+
 main_win.setLayout(line)
 
 main_win.show()
