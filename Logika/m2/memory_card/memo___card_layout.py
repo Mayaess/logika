@@ -20,7 +20,7 @@ lb_question = QLabel('')
 box_minutes = QSpinBox()
 box_minutes.setValue(5)
 
-RadioGroupBox = QGroupBox()
+RadioGroupBox = QGroupBox("Варіанти відповідей")
 
 RadioGroup = QButtonGroup()
 
@@ -44,8 +44,8 @@ layout_answer2.addWidget(radio_btn2)
 layout_answer3.addWidget(radio_btn3)
 layout_answer3.addWidget(radio_btn4)
 
-layout_answer1.addLayout(radio_btn2)
-layout_answer1.addLayout(radio_btn3)
+layout_answer1.addLayout(layout_answer2)
+layout_answer1.addLayout(layout_answer3)
 
 RadioGroupBox.setLayout(layout_answer1)
 
@@ -71,7 +71,7 @@ layout_line1.addWidget(btn_menu)
 layout_line1.addStretch(1)
 layout_line1.addWidget(btn_sleep)
 layout_line1.addWidget(box_minutes)
-layout_line1.addWidget(QLabel('хвилини'))
+layout_line1.addWidget(QLabel('хвилин'))
 
 layout_line2.addWidget(lb_question, alignment=(Qt.AlignHCenter | Qt.AlignVCenter))
 
@@ -83,6 +83,9 @@ layout_line4.addWidget(btn_OK)
 layout_line4.addStretch(1)
 
 layout_card.addLayout(layout_line1)
+layout_card.addLayout(layout_line2)
+layout_card.addLayout(layout_line3)
+layout_card.addLayout(layout_line4)
 
 
 
