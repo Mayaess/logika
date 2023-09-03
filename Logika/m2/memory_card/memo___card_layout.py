@@ -107,12 +107,12 @@ def show_result():
     ''' показати панель відповідей '''
     RadioGroupBox.hide()
     AnsGroupBox.show()
-    btn_OK.setText("Наступне пититання")
+    btn_OK.setText("Наступне питання")
 
 def show_question():
     ''' показати панель запитань '''
-    RadioGroupBox.hide()
-    AnsGroupBox.show()
+    RadioGroupBox.show()
+    AnsGroupBox.hide()
     btn_OK.setText("Відповісти")
     RadioGroup.setExclusive(False)
     radio_btn1.setChecked(False)
