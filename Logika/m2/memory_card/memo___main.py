@@ -23,11 +23,21 @@ timer = QTimer()
 win_main = QWidget()
 win_card = QWidget()
 
-
+win_main.setStyleSheet('''
+                       background-color: rgb(193, 187, 209);
+                       color: black;
+                       font-size: 20px;
+                       ''')
+win_card.setStyleSheet('''
+                       background-color: rgb(193, 187, 209);
+                       color: black;
+                       font-size: 20px;
+                       ''')
+lb_result.setStyleSheet('margin: 10px')
 # Тестові данні
 def testlist():
 
-    frm = Question("У Китаї робили все, щоб перевчити шульг і не допустити популяризації цього явища в суспільстві. Батьків лякали тим, що ліворукість дитини може спровокувати інші проблеми: заїкання, неврологічні захворювання тощо.", 'так', 'я що китаєць?', 'ні', 'не знаю')
+    frm = Question("«Гаррі Поттер і філософський камінь» був перекладений більш ніж на 70 мов, включаючи давньогрецьку та латину.", 'так', 'я що знв?', 'ні', 'не знаю')
     questions_listmodel.form_list.append(frm)
     frm = Question('Мак вирощують понад 3 000 років. Мінойці вирощували мак на насіння ще у 2700 році до нашої ери.', 'ні', 'так', 'не знаю', 'я тоді не жив, не знаю')
     questions_listmodel.form_list.append(frm)
@@ -42,7 +52,7 @@ def testlist():
 def set_card():
     ''' задає, який вигляд має вікно картки'''
     win_card.resize(card_width, card_height)
-    win_card.move(300, 300)
+    win_card.move(0, 0)
     win_card.setWindowTitle('Memory Card')
     win_card.setLayout(layout_card)
 
