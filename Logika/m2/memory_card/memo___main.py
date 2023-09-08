@@ -27,13 +27,13 @@ win_card = QWidget()
 # Тестові данні
 def testlist():
 
-    frm = Question('Яблуко', 'apple', 'application', 'pinapple', 'apply')
+    frm = Question("У Китаї робили все, щоб перевчити шульг і не допустити популяризації цього явища в суспільстві. Батьків лякали тим, що ліворукість дитини може спровокувати інші проблеми: заїкання, неврологічні захворювання тощо.", 'так', 'я що китаєць?', 'ні', 'не знаю')
     questions_listmodel.form_list.append(frm)
-    frm = Question('Дім', 'house', 'horse', 'hurry', 'hour')
+    frm = Question('Мак вирощують понад 3 000 років. Мінойці вирощували мак на насіння ще у 2700 році до нашої ери.', 'ні', 'так', 'не знаю', 'я тоді не жив, не знаю')
     questions_listmodel.form_list.append(frm)
-    frm = Question('Мишка', 'mouse', 'mouth', 'muse', 'museum')
+    frm = Question('Після трьох тижнів у прокаті “Барбі” потрапила до списку 50 найкасовіших фільмів усіх часів, підкресливши свій вражаючий комерційний успіх.', 'так', 'не знаю', 'ні', 'не слідкую')
     questions_listmodel.form_list.append(frm)
-    frm = Question('Число', 'number', 'digit', 'amount', 'summary')
+    frm = Question('Перший рукопис про Гаррі Поттера відхилили 12 видавництв.', 'так', 'звісно ні', 'не знаю я', 'ні')
     questions_listmodel.form_list.append(frm)
 
 # Функції для проведення тесту
