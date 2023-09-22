@@ -46,10 +46,10 @@ row1.addWidget(btn_note_create)
 row1.addWidget(btn_note_delete)
 
 col2.addLayout(row1)
-col2.addLayout(btn_note_save)
+col2.addWidget(btn_note_save)
 
 def show_notes():
-    key = lst_notes.selectedItems()[0].texr()
+    key = lst_notes.selectedItems()[0].text()
     field_text.setText(notes[key]['текст'])
 
 lst_notes.itemClicked.connect(show_notes)
