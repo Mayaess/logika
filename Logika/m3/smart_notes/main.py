@@ -96,6 +96,62 @@ def delete_note():
     lst_notes.clear()
     lst_notes.addItems(notes)
 
+def add_tag():
+    key = lst_notes.currentItem().text()
+    tag = field_tag.text()
+
+    notes[key]["теги"].append(tag)
+
+    lst_tags.addItem(tag) 
+
+    saveToFile()
+
+def unpin_tag():
+    key = lst_notes.currentItem().text()
+    tag = lst_tags.currentItem().text()
+
+    notes[key]["теги"].remove(tag)
+
+    lst_tags.clear()
+    lst_tags.addItems(notes[key]["теги"]) 
+
+
+    saveToFile()
+
+
+
+def search_tag():
+    tag = field_tag.text()
+    
+    if 'Шукати замітки за тегом' == btn_tag_search.text():
+        filtered_notes = {}
+
+        for key in notes:
+            if tag in notes[key]["теги"]:
+                filtered_notes[key] = notes[key]
+
+        btn_tag_search.setText('Скинути пошук')
+
+        lst_notes.clear()
+        lst_notes.addItems(filtered_notes)
+        lst_tags.clear()
+        field_text.clear()
+
+    elif 'Скинути пошук' == btn_tag_search.text():
+        btn_tag_search.setText('Шукати замітки за тегом' )
+
+        lst_notes.clear()
+        lst_notes.addItems(notes)
+        lst_tags.clear()
+        field_text.clear()
+
+
+
+btn_tag_add.clicked.connect(add_tag)
+btn_tag_unpin.clicked.connect(unpin_tag)
+btn_tag_search.clicked.connect(search_tag)
+
+
 lst_notes.itemClicked.connect(show_note)
 btn_note_save.clicked.connect(save_note)
 btn_note_delete.clicked.connect(delete_note)
