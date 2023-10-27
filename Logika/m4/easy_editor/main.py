@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget, QFileDialog, QLabel, 
     QPushButton, QListWidget, QHBoxLayout, QVBoxLayout
 )
+from PIL import Image, ImageFilter
 
 
 #from PIL import Image, ImageFilter
@@ -49,14 +50,6 @@ layout_editor.addLayout(col2)
 layout_editor.addLayout(col1, 1)
 layout_editor.addLayout(col2, 4)
 
-workdir = QFileDialog.getExistingDirectory()
-
-print(workdir)
-
-files_and_folders = os.listdir(workdir)
-
-print(files_and_folders)
-
 def filter(files):
     result = []
     ext = ['jpg', 'jpeg', 'bmp', 'gif', 'jfif', 'svg', 'png']
@@ -67,7 +60,50 @@ def filter(files):
 
     return result
 
-print(filter(files_and_folders))
+def showFieles():
+    global workdir
+    workdir = QFileDialog.getExistingDirectory()
+    files_and_folders = os.listdir(workdir)
+
+    filtered_img = filter(files_and_folders)
+
+    lst_files.clear()
+    lst_files.addItems(filtered_img)
+
+class ImageProcessor():
+    def __init__(self):
+        self.filename = None
+        self.original = None
+        self.save_dir = 'Modified/'
+
+    def loadImage(self, filename):
+        self.filename = filename
+        full_path = os.path.join(workdir, filename)
+        self.original = Image.open(filename)
+
+    def show_image(self, path):
+        lb_pic.hide()
+
+        pixmapimage = QPixmap(path)
+        w, h = lb_pic.width(), lb_pic.height()
+
+        pixmapimage = pixmapimage.scaled(w, h, Qt.KeepAspectRatio)
+
+        lb_pic.setPixmap(pixmapimage)
+        lb_pic.show()
+
+def showChosenImage():
+    filename = lst_files.currentItem().text()
+    wortimage.loadImage(filename)
+    full_path = os.path.join(workdir, filename)
+    wortimage.show_image(full_path)
+
+
+wortimage = ImageProcessor()
+
+lst_files.itemClicked.connect(showChosenImage)
+
+btn_folder.clicked.connect(showFieles)
 
 main_win.setLayout(layout_editor)
 main_win.show()
