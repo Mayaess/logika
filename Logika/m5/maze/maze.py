@@ -1,6 +1,7 @@
 #створи гру "Лабіринт"!
 from typing import Any
 from pygame import *
+from pygame.sprite import _Group
 from pygame.transform import scale, flip
 from pygame.image import load
 from random import randint
@@ -43,6 +44,22 @@ class Enemy(GameSprite):
         if self.rect.x >= win_width-80:
             self.direction = 'left'
 
+class Wall(sprite.Sprite):
+    def __init__(self, wall_x, wall_y, wall_width, wall_height):
+        super().__init__()
+        self.width = wall_width
+        self.height = wall_height
+
+        self.image = Surface((self.width, self.height))
+        self.image.fill((0,225,0))
+
+        self.rect = self.image.get_rect()
+        self.rect.x = wall_x
+        self.rect.y = wall_y
+
+    def reset(self):
+        window.blit(self.image, (self.rect.x, self.rect.y))
+
 win_width = 700
 win_height = 500
 
@@ -53,15 +70,25 @@ player = Player("hero.png", 5, win_height - 80, 4)
 monster = Enemy("cyborg.png", win_width - 80, win_height - 200, 2)
 final = GameSprite("treasure.png", win_width - 80, win_height - 80, 0)
 
+wall1 = Wall(150, 200, 5,100)
+
 game = True
 finish = False
 clock = time.Clock()
 FPS = 60
 
+font.init()
+
+f = font.Font(None, 70)
+win = f.render('YOU WIN!', True, (225, 215, 0))
+lose = f.render('YOU LOSE!', True, (225, 215, 0))
 
 mixer.init()
 mixer.music.load("jungles.ogg")
 mixer.music.play()
+
+money_sound = mixer.Sound("money.ogg")
+kick_sound = mixer.Sound("kick.ogg")
 
 while game:
     for e in event.get():
@@ -73,9 +100,14 @@ while game:
         player.reset()
         monster.reset()
         final.reset()
+        wall1.reset()
 
         player.update()
         monster.update()
+
+        if sprite.collide_rect(player, final):
+            finish = True
+            money_sound.play()
 
     display.update()
     clock.tick(FPS)
