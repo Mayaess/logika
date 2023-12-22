@@ -5,6 +5,7 @@ from pygame.sprite import Sprite
 from pygame.transform import scale, flip
 from pygame.image import load
 from random import randint
+from time import time as timer
 
 lost = 0
 score = 0
@@ -31,7 +32,8 @@ class Player(GameSprite):
             self.rect.x += self.speed
 
     def fire(self):
-        pass
+        bullet = Bullet('bullet.png', self.rect.centerx, self.rect.top, 15, 20, 10)
+        bullets.add(bullet)
 
 class Enemy(GameSprite):
     def update(self):
@@ -42,6 +44,12 @@ class Enemy(GameSprite):
             self.rect.x = randint(0, win_width-80)
             lost += 1
 
+class Bullet(GameSprite):
+    def update(self):
+        self.rect.y -= self.speed
+        if self.rect.y < 0:
+            self.kill()
+
 win_width = 900
 win_height = 500
 window = display.set_mode((win_width, win_height))
@@ -49,6 +57,9 @@ window = display.set_mode((win_width, win_height))
 background = scale(load('galaxy.jpg'), (win_width, win_height))
 
 ship = Player('rocket.png', 10, win_height - 100, 80, 100, 5)
+
+bullets = sprite.Group()
+
 
 monsters = sprite.Group()
 
@@ -65,19 +76,47 @@ clock = time.Clock()
 font.init()
 font1 = font.SysFont('Arial', 36)
 
+ammo = 5
+reload = False
+
 while game:
     for e in event.get():
         if e.type == QUIT:
             game = False
 
+        if e.type == KEYDOWN:
+            if e.key == K_SPACE:
+                if ammo>0 and reload == False:
+                    ship.fire()
+                    ammo -= 1
+                
+                if ammo == 0 and reload == False:
+                    reload = True
+                    start_reload = timer()
+
     if not finish:
         window.blit(background, (0,0))
         ship.reset()
         monsters.draw(window)
+        bullets.draw(window)
+
+        if reload:
+            now_time = timer()
+
+            delta = now_time - start_reload
+            if delta < 3:
+                txt_reload = f.render(f'Почекайте, йде перезарядка', True, [225,255,255])
+                window.blit(txt_reload,[200,400])
+            else:
+                ammo = 5
+                reload = False
 
         txt_lose = font1.render(f'Пропущено: {lost}', True, [225,255,255])
         window.blit(txt_lose, [10,50])
+        txt_win = font1.render(f'Р ахунок: {score}', True, [225,255,255])
+        window.blit(txt_win, [10,10])
 
+        bullets.update()
         monsters.update()
         ship.update()
 
