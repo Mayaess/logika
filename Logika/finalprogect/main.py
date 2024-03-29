@@ -63,7 +63,7 @@ class Wall(GameSprite):
 
 
 
-player = Player('images/witch right.png', 40 , 350, 30, 30)
+player = Player('images/witch right.png', 40 , 350, 28, 28)
 gold = GameSprite('images/closed_door.png', WIDTH - 30 , 458, 30, 30)
 ground = transform.scale(image.load('images/pebble_brown_1_old.png'), (TILESIZE, TILESIZE))
 
@@ -99,8 +99,11 @@ with open('map.txt', 'r') as file:
             elif symbol == 'L':
                 walls.append(GameSprite('images/altar_xom_7.png', x, y, 30, 30))
             elif symbol == 'B':
-                walls.append(GameSprite('images/brick_brown_6.png', x, y, 30, 30))
-            
+                GameSprite('images/brick_brown_6.png', x, y, 35, 35)
+            elif symbol == 'L':
+                GameSprite('images/altar_xom_7.png', x, y, 30, 30)
+            elif symbol == 'D':
+                GameSprite('images/stone_stairs_up.png', x, y, 30, 30)
                 
             x += 35
         y += 35
